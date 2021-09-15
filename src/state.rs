@@ -151,10 +151,10 @@ impl ProgressState {
             self.est.record_step(new_pos, Instant::now());
         }
         if new_pos >= self.draw_next {
-            self.draw_next = new_pos.saturating_add(if self.draw_rate != 0 {
-                (self.per_sec() / self.draw_rate as f64) as u64
-            } else {
+            self.draw_next = new_pos.saturating_add(if self.draw_rate == 0 {
                 self.draw_delta
+            } else {
+                (self.per_sec() / self.draw_rate as f64) as u64
             });
             true
         } else {
