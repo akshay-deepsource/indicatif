@@ -238,9 +238,10 @@ impl ProgressState {
             return Ok(());
         }
 
-        let lines = match self.should_render() {
-            true => self.style.format_state(self),
-            false => Vec::new(),
+        let lines = if self.should_render() {
+            self.style.format_state(self)
+        } else {
+            Vec::new()
         };
 
         let draw_state = ProgressDrawState::new(lines, self.is_finished());
